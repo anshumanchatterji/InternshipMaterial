@@ -32,7 +32,9 @@ public class MAIN {
 		System.out.println("Generate Random Password: " + su.generateRandomPassword(15));
 
 		System.out.println("--------------------------------------------------------------------");
-
+        
+		RecursionPractice rp = new RecursionPractice();
+		rp.printFibonacci(0,1);
 	}
 
 }
