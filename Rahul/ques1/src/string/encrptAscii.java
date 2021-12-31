@@ -3,35 +3,25 @@ package string;
 public class encrptAscii {
 
 	public static void main(String[] args) {
-		
+
 		String str = "ABCXYZabcxyz";
 		int n = 3;
 
-		
-		encrypt(str, a);
+		encrypt(str, n);
 	}
-				
 
 	public static void encrypt(String s, int n) {
 
-				
-				String a = "";
+		String a = "";
 
-				for (int i = 0; i < s.length(); i++) {
-					int val = s.charAt(i);
-					
-					int temp = val + n;
-					char k = (char)(temp + 'a' );
-					
-					
-					
-					
+		for (int i = 0; i < s.length(); i++) {
+			int val = s.charAt(i);
 
-				
-					
-				}
-				System.out.println(a);
-			}
+			int temp = val + n;
+			char k = (char) (temp + 'a');
 
-	
+		}
+		System.out.println(a);
+	}
+
 }
