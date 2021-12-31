@@ -11,6 +11,7 @@ public class Pattern {
 	// * * *
 	// *
 
+	
 	public static void main(String[] args) {
 		pattern();
 		String input = "rAHUL sINGH";

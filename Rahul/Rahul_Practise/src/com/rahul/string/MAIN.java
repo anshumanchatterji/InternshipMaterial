@@ -4,6 +4,10 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 
+import javax.sound.midi.SysexMessage;
+
+import com.rahul.FileSystem.FileSystemUtil;
+
 public class MAIN {
 
 	public static void main(String[] args) throws IOException {
@@ -13,7 +17,7 @@ public class MAIN {
 		try {
 			RahulsFileReader rfr = new RahulsFileReader();
 			input = rfr.readFullFile(new File("D:\\a.txt"));
-
+			
 		} catch (FileNotFoundException ex) {
 			System.err.println("File was not found. Please check the path again.");
 		}
@@ -34,7 +38,20 @@ public class MAIN {
 		System.out.println("--------------------------------------------------------------------");
         
 		RecursionPractice rp = new RecursionPractice();
-		rp.printFibonacci(0,1);
+		rp.printFibonacci();
+		
+		System.out.println("--------------------------------------------------------------------");
+		
+		FileSystemUtil fsu = new FileSystemUtil("D:/Quick Instrumentor");
+		fsu.printProperties();
+		try {
+			fsu.printAllFilesAndDirectoriesRecursively();
+		} catch (Exception e) {
+			System.err.println(e.getMessage());
+		}
+		
+		
+		
 	}
 
 }
