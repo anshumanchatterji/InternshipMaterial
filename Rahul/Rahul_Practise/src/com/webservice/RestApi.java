@@ -57,9 +57,8 @@ public class RestApi {
 		return sb.toString();
 	}
 
-	public static void DoPostUsingURLConnection() throws IOException {
-		try {
-
+	public static String DoPostUsingURLConnection() throws Exception {
+		
 			String jsonRequestBody = "{\"ClientID\":\"d5c86db2-6ebc-11ec-90d6-0242ac120003\",\"ClientName\":\"Test1\",\"OS_Name\":\"Windows\",\"OS_Version\":\"10\"}";//gson.tojson() converts your pojo to json
 
 			URL uri = new URL("https://qa3.stg.smartopkey.com/api/v1/agentrpc/RegisterSpockAgentClient");
@@ -87,19 +86,11 @@ public class RestApi {
 				}
 				in.close();
 
-				response.toString();
+				return response.toString();
 
 			} else {
 				throw new Exception("Command Response not sent.");
 			}
-
-		} catch (Exception ex) {
-			ex.printStackTrace();
-		}
-
 	}
-
-	
-	
 	
 }
