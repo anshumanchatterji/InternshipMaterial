@@ -7,6 +7,7 @@ import java.io.IOException;
 import javax.sound.midi.SysexMessage;
 
 import com.rahul.FileSystem.FileSystemUtil;
+import com.webservice.RestApi;
 
 public class MAIN {
 
@@ -50,6 +51,10 @@ public class MAIN {
 			System.err.println(e.getMessage());
 		}
 		
+		
+		RestApi ra = new RestApi();
+		String str = ra.doPost();
+		System.out.println(str);
 		
 		
 	}
