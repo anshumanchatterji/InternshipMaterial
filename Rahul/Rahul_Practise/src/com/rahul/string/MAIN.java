@@ -56,7 +56,7 @@ public class MAIN {
 		Date startedOn = new Date();
 		
 		SSLUtilities.trustAllHosts();
-		String str = RestApi.doPost();
+		String str = RestApi.doPostUsingApacheHttpClient();
 		System.out.println(str);
 		long millis = new Date().getTime() - startedOn.getTime();
 		System.out.println("Seconds: " + millis/1000);
