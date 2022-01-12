@@ -3,15 +3,14 @@ package com.rahul.string;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-
-import javax.sound.midi.SysexMessage;
+import java.util.Date;
 
 import com.rahul.FileSystem.FileSystemUtil;
 import com.webservice.RestApi;
 
 public class MAIN {
 
-	public static void main(String[] args) throws IOException {
+	public static void main(String[] args) throws IOException, UnsupportedOperationException, InterruptedException {
 
 		String input = "Rahul is a good boy and he's currently available at rahul@gmail.com. And he is very fond of maths + computers";
 
@@ -51,12 +50,13 @@ public class MAIN {
 			System.err.println(e.getMessage());
 		}
 		
+		Date startedOn = new Date();
 		
-		RestApi ra = new RestApi();
-		String str = ra.doPost();
+		
+		String str = RestApi.doPost();
 		System.out.println(str);
-		
-		
+		long millis = new Date().getTime() - startedOn.getTime();
+		System.out.println("Seconds: " + millis/1000);
 	}
 
 }
