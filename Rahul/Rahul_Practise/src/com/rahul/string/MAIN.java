@@ -3,16 +3,19 @@ package com.rahul.string;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.security.KeyManagementException;
+import java.security.NoSuchAlgorithmException;
 import java.util.Date;
 
 import com.rahul.FileSystem.FileSystemUtil;
 import com.webservice.RestApi;
+import com.webservice.SSLUtilities;
 
 public class MAIN {
 
-	public static void main(String[] args) throws IOException, UnsupportedOperationException, InterruptedException {
+	public static void main(String[] args) throws Exception {
 
-		String input = "Rahul is a good boy and he's currently available at rahul@gmail.com. And he is very fond of maths + computers";
+		/*String input = "Rahul is a good boy and he's currently available at rahul@gmail.com. And he is very fond of maths + computers";
 
 		try {
 			RahulsFileReader rfr = new RahulsFileReader();
@@ -48,11 +51,11 @@ public class MAIN {
 			fsu.printAllFilesAndDirectoriesRecursively();
 		} catch (Exception e) {
 			System.err.println(e.getMessage());
-		}
+		}*/
 		
 		Date startedOn = new Date();
 		
-		
+		SSLUtilities.trustAllHosts();
 		String str = RestApi.doPost();
 		System.out.println(str);
 		long millis = new Date().getTime() - startedOn.getTime();
