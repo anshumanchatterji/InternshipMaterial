@@ -42,7 +42,7 @@ public class MAIN {
 		
 		System.out.println("--------------------------------------------------------------------");
 		
-		FileSystemUtil fsu = new FileSystemUtil("D:/Quick Instrumentor");
+		FileSystemUtil fsu = new FileSystemUtil();
 		fsu.printProperties();
 		try {
 			fsu.printAllFilesAndDirectoriesRecursively();
