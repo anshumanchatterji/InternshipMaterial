@@ -4,21 +4,20 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.OutputStream;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
-import org.apache.http.NameValuePair;
 import org.apache.http.client.HttpClient;
-import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.HttpClients;
-import org.apache.http.message.BasicNameValuePair;
+
 
 public class RestApi {
 
@@ -63,4 +62,49 @@ public class RestApi {
 		System.out.println(_dateFormat.format(date) + " " + logText); // 2016/11/16 12:08:43
 	}
 
+	public static void DoPostUsingURLConnection() throws IOException {
+		try {
+
+			String jsonRequestBody = "{\"ClientID\":\"d5c86db2-6ebc-11ec-90d6-0242ac120003\",\"ClientName\":\"Test1\",\"OS_Name\":\"Windows\",\"OS_Version\":\"10\"}";//gson.tojson() converts your pojo to json
+
+			URL uri = new URL("https://qa3.stg.smartopkey.com/api/v1/agentrpc/RegisterSpockAgentClient");
+			HttpURLConnection connection = (HttpURLConnection) uri.openConnection();
+			connection.setRequestMethod("POST");
+			connection.setRequestProperty("Content-Type", "application/json");
+			connection.setDoOutput(true);
+
+			connection.setRequestProperty("Authorization","AuthenticationWithAPI c2FjaGluLmJoYXRpYUBzc3RzaW5jLmNvbTpUNUM2VVVGTkVGQUQwNEVVT0U=00");
+
+			// Create the Request Body
+			try (OutputStream os = connection.getOutputStream()) {
+				byte[] input = jsonRequestBody.getBytes("utf-8");
+				os.write(input, 0, input.length);
+			}
+
+			int responseCode = connection.getResponseCode();
+			if (responseCode == HttpURLConnection.HTTP_OK) { // success
+				BufferedReader in = new BufferedReader(new InputStreamReader(connection.getInputStream()));
+				String inputLine;
+				StringBuffer response = new StringBuffer();
+
+				while ((inputLine = in.readLine()) != null) {
+					response.append(inputLine);
+				}
+				in.close();
+
+				response.toString();
+
+			} else {
+				throw new Exception("Command Response not sent.");
+			}
+
+		} catch (Exception ex) {
+			ex.printStackTrace();
+		}
+
+	}
+
+	
+	
+	
 }
