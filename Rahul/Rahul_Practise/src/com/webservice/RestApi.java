@@ -15,29 +15,33 @@ import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.HttpClients;
 
+import okhttp3.MediaType;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.RequestBody;
+import okhttp3.Response;
+
 public class RestApi {
 
-	public static String doPostUsingApacheHttpClient() throws UnsupportedOperationException, IOException {
-		HttpClient httpclient = HttpClients.createDefault();
-		HttpPost httppost = new HttpPost("https://qa3.stg.smartopkey.com/api/v1/agentrpc/RegisterSpockAgentClient");
+	public static String postUri = "https://qa3.stg.smartopkey.com/api/v1/agentrpc/RegisterSpockAgentClient";
+	// static String baseURI = "https://google.com";
+	static String authorizationHeader = "1AuthenticationWithAPI c2FjaGluLmJoYXRpYUBzc3RzaW5jLmNvbTpUNUM2VVVGTkVGQUQwNEVVT0U=";
+	static String jsonRequestBody = "{\"ClientID\":\"d5c86db2-6ebc-11ec-90d6-0242ac120003\",\"ClientName\":\"Test1\",\"OS_Name\":\"Windows\",\"OS_Version\":\"10\"}";// gson.tojson() converts your
 
-		// Request parameters and other properties.
-		// List<NameValuePair> params = new ArrayList<NameValuePair>(2);
-		// params.add(new BasicNameValuePair("param-1", "12345"));
-		// params.add(new BasicNameValuePair("param-2", "Hello!"));
-		// httppost.setEntity(new UrlEncodedFormEntity(params, "UTF-8"));
+	static HttpClient httpclient = HttpClients.createDefault();
 
-		StringEntity postingString = new StringEntity("{\"ClientID\":\"d5c86db2-6ebc-11ec-90d6-0242ac120003\",\"ClientName\":\"Test1\",\"OS_Name\":\"Windows\",\"OS_Version\":\"10\"}");// gson.tojson()
-																																														// converts your
-																																														// pojo to json
+	public static String doPostUsingApacheHttpClient(String s_uri) throws UnsupportedOperationException, IOException {
+		// HttpClient httpclient = HttpClients.createDefault();
 
-		httppost.addHeader("Authorization", "AuthenticationWithAPI c2FjaGluLmJoYXRpYUBzc3RzaW5jLmNvbTpUNUM2VVVGTkVGQUQwNEVVT0U=00");
+		HttpPost httppost = new HttpPost(s_uri);
+
+		httppost.addHeader("Authorization", authorizationHeader);
 
 		// Execute and get the response.
 		HttpResponse response = httpclient.execute(httppost);
 		HttpEntity entity = response.getEntity();
 
-		httppost.setEntity(postingString);
+		httppost.setEntity(new StringEntity(jsonRequestBody));
 		httppost.setHeader("Content-type", "application/json");
 
 		StringBuffer sb = new StringBuffer();
@@ -49,7 +53,7 @@ public class RestApi {
 				// String line = reader.readLine();
 				String line;
 				while ((line = reader.readLine()) != null) {
-					sb.append(line);
+					sb.append(line).append("\n");
 				}
 			}
 		}
@@ -57,17 +61,16 @@ public class RestApi {
 		return sb.toString();
 	}
 
-	public static String DoPostUsingURLConnection() throws Exception {
-		
-			String jsonRequestBody = "{\"ClientID\":\"d5c86db2-6ebc-11ec-90d6-0242ac120003\",\"ClientName\":\"Test1\",\"OS_Name\":\"Windows\",\"OS_Version\":\"10\"}";//gson.tojson() converts your pojo to json
-
-			URL uri = new URL("https://qa3.stg.smartopkey.com/api/v1/agentrpc/RegisterSpockAgentClient");
+	public static String DoPostUsingURLConnection(String s_uri) throws Exception {
+		try {
+			URL uri = new URL(s_uri);
 			HttpURLConnection connection = (HttpURLConnection) uri.openConnection();
+			// Logger.log("Opened Connection");
 			connection.setRequestMethod("POST");
 			connection.setRequestProperty("Content-Type", "application/json");
 			connection.setDoOutput(true);
 
-			connection.setRequestProperty("Authorization","AuthenticationWithAPI c2FjaGluLmJoYXRpYUBzc3RzaW5jLmNvbTpUNUM2VVVGTkVGQUQwNEVVT0U=00");
+			connection.setRequestProperty("Authorization", authorizationHeader);
 
 			// Create the Request Body
 			try (OutputStream os = connection.getOutputStream()) {
@@ -75,22 +78,50 @@ public class RestApi {
 				os.write(input, 0, input.length);
 			}
 
+			// Logger.log("Written Output Stream");
+
 			int responseCode = connection.getResponseCode();
-			if (responseCode == HttpURLConnection.HTTP_OK) { // success
-				BufferedReader in = new BufferedReader(new InputStreamReader(connection.getInputStream()));
-				String inputLine;
-				StringBuffer response = new StringBuffer();
+			InputStream is = null;
+			if (responseCode == HttpURLConnection.HTTP_OK)
+				is = connection.getInputStream();
+			else
+				is = connection.getErrorStream();
 
-				while ((inputLine = in.readLine()) != null) {
-					response.append(inputLine);
-				}
-				in.close();
+			BufferedReader in = new BufferedReader(new InputStreamReader(is));
+			String inputLine;
+			StringBuffer response = new StringBuffer();
 
-				return response.toString();
-
-			} else {
-				throw new Exception("Command Response not sent.");
+			while ((inputLine = in.readLine()) != null) {
+				response.append(inputLine).append("\n");
+				;
 			}
+			in.close();
+
+			return response.toString();
+
+		} catch (Exception ex) {
+			return ex.getMessage();
+		} finally {
+			// Logger.log("Got full response");
+		}
 	}
-	
+
+	public static final MediaType JSON = MediaType.parse("application/json; charset=utf-8");
+
+	static OkHttpClient client = new OkHttpClient();
+
+	public static String DoPostUsingOkHttp(String s_uri) {
+		// OkHttpClient client = SSLUtilities.getUnsafeOkHttpClient();// new OkHttpClient();
+		RequestBody formBody = RequestBody.create(jsonRequestBody, JSON);
+		Request request = new Request.Builder().url(s_uri).addHeader("Authorization", authorizationHeader).post(formBody).build();
+
+		try {
+			Response response = client.newCall(request).execute();
+			return response.body().string();
+			// Do something with the response.
+		} catch (IOException e) {
+			return e.getMessage();
+		}
+	}
+
 }
