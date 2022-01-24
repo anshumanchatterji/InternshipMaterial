@@ -9,7 +9,7 @@ public class Logger {
 	public static void log(String msg) {
 		long millis = new Date().getTime() - startedOn.getTime();
 		
-		msg = String.format("[%1s] %2d %3$s", new Date(), millis, msg);
+		msg = String.format("[%1s] %2dms %3$s", new Date(), millis, msg);
 		System.err.println(msg);
 		startedOn = new Date();
 	}

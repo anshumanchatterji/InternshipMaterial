@@ -37,56 +37,18 @@ public class MAIN {
 		 * FileSystemUtil fsu = new FileSystemUtil(); fsu.printProperties(); try { fsu.printAllFilesAndDirectoriesRecursively(); } catch (Exception e) { System.err.println(e.getMessage()); }
 		 */
 
-		Logger.log("Staring Trust All Hosts");
+		Logger.log("Staring...");
 
 		// SSLUtilities.trustAllHosts();
-		Logger.log("Trust All Hosts Done");
+		//Logger.log("Trust All Hosts Done");
 
-		System.out.println(RestApi.doPostUsingApacheHttpClient(RestApi.postUri));
-		Logger.log("###### Finished using Apache Http Client");
-
-		System.out.println(RestApi.DoPostUsingURLConnection(RestApi.postUri));
-		Logger.log("++++++ Finished using URL Connection");
-
+	
 		
 		System.out.println(RestApi.DoPostUsingOkHttp(RestApi.postUri));
 		Logger.log("====== Finished using OK Http");
 
 		System.out.println("^^^^^^^^^^^^^^^^^^^^^^");
 
-		System.out.println(RestApi.doPostUsingApacheHttpClient(RestApi.postUri));
-		Logger.log("###### Finished using Apache Http Client");
-
-		System.out.println(RestApi.DoPostUsingURLConnection(RestApi.postUri));
-		Logger.log("++++++ Finished using URL Connection");
-
-		
-		System.out.println(RestApi.DoPostUsingOkHttp(RestApi.postUri));
-		Logger.log("====== Finished using OK Http");
-
-		System.out.println("^^^^^^^^^^^^^^^^^^^^^^");
-
-		System.out.println(RestApi.doPostUsingApacheHttpClient(RestApi.postUri));
-		Logger.log("###### Finished using Apache Http Client");
-
-		System.out.println(RestApi.DoPostUsingURLConnection(RestApi.postUri));
-		Logger.log("++++++ Finished using URL Connection");
-
-		
-		System.out.println(RestApi.DoPostUsingOkHttp(RestApi.postUri));
-		Logger.log("====== Finished using OK Http");
-
-		System.out.println("^^^^^^^^^^^^^^^^^^^^^^");
-
-		System.out.println(RestApi.doPostUsingApacheHttpClient(RestApi.postUri));
-		Logger.log("###### Finished using Apache Http Client");
-
-		System.out.println(RestApi.DoPostUsingURLConnection(RestApi.postUri));
-		Logger.log("++++++ Finished using URL Connection");
-
-		
-		System.out.println(RestApi.DoPostUsingOkHttp(RestApi.postUri));
-		Logger.log("====== Finished using OK Http");
 
 		System.out.println("^^^^^^^^^^^^^^^^^^^^^^");
 

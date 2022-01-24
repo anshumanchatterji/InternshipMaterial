@@ -7,6 +7,7 @@ import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.nio.charset.Charset;
 
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
@@ -15,15 +16,19 @@ import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.HttpClients;
 
+import com.webservice.okhttp.PrintingEventListener;
+
 import okhttp3.MediaType;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
+import okio.ByteString;
 
 public class RestApi {
 
 	public static String postUri = "https://qa3.stg.smartopkey.com/api/v1/agentrpc/RegisterSpockAgentClient";
+	//public static String postUri = "https://gorest.co.in/public/v1/users";
 	// static String baseURI = "https://google.com";
 	static String authorizationHeader = "1AuthenticationWithAPI c2FjaGluLmJoYXRpYUBzc3RzaW5jLmNvbTpUNUM2VVVGTkVGQUQwNEVVT0U=";
 	static String jsonRequestBody = "{\"ClientID\":\"d5c86db2-6ebc-11ec-90d6-0242ac120003\",\"ClientName\":\"Test1\",\"OS_Name\":\"Windows\",\"OS_Version\":\"10\"}";// gson.tojson() converts your
@@ -108,20 +113,31 @@ public class RestApi {
 
 	public static final MediaType JSON = MediaType.parse("application/json; charset=utf-8");
 
-	static OkHttpClient client = new OkHttpClient();
+	// static OkHttpClient client = new OkHttpClient();
 
-	public static String DoPostUsingOkHttp(String s_uri) {
+	static private final OkHttpClient client = new OkHttpClient.Builder().eventListenerFactory(PrintingEventListener.FACTORY).build();
+
+	public static String DoPostUsingOkHttp(String s_uri) throws IOException {
 		// OkHttpClient client = SSLUtilities.getUnsafeOkHttpClient();// new OkHttpClient();
+
 		RequestBody formBody = RequestBody.create(jsonRequestBody, JSON);
 		Request request = new Request.Builder().url(s_uri).addHeader("Authorization", authorizationHeader).post(formBody).build();
 
 		try {
 			Response response = client.newCall(request).execute();
-			return response.body().string();
-			// Do something with the response.
+			return response.body().string(); // Do something with the response.
 		} catch (IOException e) {
 			return e.getMessage();
 		}
+
+		/*
+		 * Request request = new Request.Builder().url("https://publicobject.com/helloworld.txt").build();
+		 * 
+		 * 
+		 * System.out.println("REQUEST 1 (new connection)"); try (Response response = client.newCall(request).execute()) { // Consume and discard the response body. ByteString bs =
+		 * response.body().source().readByteString(); return bs.string(Charset.forName("UTF8")); }
+		 */
+
 	}
 
 }
