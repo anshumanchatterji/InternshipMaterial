@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<project default="create_run_jar" name="Create Runnable Jar for Project Rahul_Practise with libraries in sub-folder">
+    <!--this file was created by Eclipse Runnable JAR Export Wizard-->
+    <!--ANT 1.7 is required                                        -->
+    <!--define folder properties-->
+    <property name="dir.buildfile" value="."/>
+    <property name="dir.workspace" value="C:/Users/anshuman.chatterjee/workspace"/>
+    <property name="dir.jarfile" value="${dir.buildfile}/build"/>
+    <target name="create_run_jar">
+        <jar destfile="${dir.jarfile}/RahulPractise.jar">
+            <manifest>
+                <attribute name="Main-Class" value="com.rahul.string.MAIN"/>
+                <attribute name="Class-Path" value=". RahulPractise_lib/httpclient-4.5.13.jar RahulPractise_lib/httpcore-4.4.13.jar RahulPractise_lib/commons-logging-1.2.jar RahulPractise_lib/commons-codec-1.11.jar RahulPractise_lib/okhttp-4.9.3.jar RahulPractise_lib/okio-2.8.0.jar RahulPractise_lib/kotlin-stdlib-common-1.4.0.jar RahulPractise_lib/kotlin-stdlib-1.4.10.jar RahulPractise_lib/annotations-13.0.jar"/>
+            </manifest>
+            <fileset dir="${dir.buildfile}/target/classes"/>
+        </jar>
+        <delete dir="${dir.jarfile}/RahulPractise_lib"/>
+        <mkdir dir="${dir.jarfile}/RahulPractise_lib"/>
+        <copy file="C:/Users/anshuman.chatterjee/.m2/repository/org/apache/httpcomponents/httpclient/4.5.13/httpclient-4.5.13.jar" todir="${dir.jarfile}/RahulPractise_lib"/>
+        <copy file="C:/Users/anshuman.chatterjee/.m2/repository/org/apache/httpcomponents/httpcore/4.4.13/httpcore-4.4.13.jar" todir="${dir.jarfile}/RahulPractise_lib"/>
+        <copy file="C:/Users/anshuman.chatterjee/.m2/repository/commons-logging/commons-logging/1.2/commons-logging-1.2.jar" todir="${dir.jarfile}/RahulPractise_lib"/>
+        <copy file="C:/Users/anshuman.chatterjee/.m2/repository/commons-codec/commons-codec/1.11/commons-codec-1.11.jar" todir="${dir.jarfile}/RahulPractise_lib"/>
+        <copy file="C:/Users/anshuman.chatterjee/.m2/repository/com/squareup/okhttp3/okhttp/4.9.3/okhttp-4.9.3.jar" todir="${dir.jarfile}/RahulPractise_lib"/>
+        <copy file="C:/Users/anshuman.chatterjee/.m2/repository/com/squareup/okio/okio/2.8.0/okio-2.8.0.jar" todir="${dir.jarfile}/RahulPractise_lib"/>
+        <copy file="C:/Users/anshuman.chatterjee/.m2/repository/org/jetbrains/kotlin/kotlin-stdlib-common/1.4.0/kotlin-stdlib-common-1.4.0.jar" todir="${dir.jarfile}/RahulPractise_lib"/>
+        <copy file="C:/Users/anshuman.chatterjee/.m2/repository/org/jetbrains/kotlin/kotlin-stdlib/1.4.10/kotlin-stdlib-1.4.10.jar" todir="${dir.jarfile}/RahulPractise_lib"/>
+        <copy file="C:/Users/anshuman.chatterjee/.m2/repository/org/jetbrains/annotations/13.0/annotations-13.0.jar" todir="${dir.jarfile}/RahulPractise_lib"/>
+    </target>
+</project>

@@ -8,6 +8,8 @@ import java.util.Date;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicLong;
 
+import com.rahul.log.Logger;
+
 import okhttp3.Call;
 import okhttp3.Connection;
 import okhttp3.EventListener;
@@ -33,23 +35,14 @@ public class PrintingEventListener extends EventListener {
 	final long callId;
 	final long callStartNanos;
 
-	long lastEventAt = System.nanoTime();
-
+	
 	public PrintingEventListener(long callId, long callStartNanos) {
 		this.callId = callId;
 		this.callStartNanos = callStartNanos;
 	}
 
 	private void printEvent(String msg) {
-		long elapsedNanos = System.nanoTime() - lastEventAt;
-
-		// System.out.printf("%04d %.3f %s%n", callId, elapsedNanos / 1000000000d, name);
-
-		msg = String.format("[%1s] %.3f %3$s", new Date(), elapsedNanos / 1000000000d, msg);
-
-		System.out.println(msg);
-
-		lastEventAt = System.nanoTime();
+		Logger.log(msg);
 	}
 
 	@Override

@@ -43,7 +43,7 @@ public class MAIN {
 		//Logger.log("Trust All Hosts Done");
 
 	
-		
+		//System.out.println(RestApi.DoPostUsingURLConnection(RestApi.postUri));
 		System.out.println(RestApi.DoPostUsingOkHttp(RestApi.postUri));
 		Logger.log("====== Finished using OK Http");
 

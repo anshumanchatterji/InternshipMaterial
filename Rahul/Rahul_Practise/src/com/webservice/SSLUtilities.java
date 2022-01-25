@@ -15,6 +15,8 @@ import javax.net.ssl.TrustManager;
 import javax.net.ssl.X509ExtendedTrustManager;
 import javax.net.ssl.X509TrustManager;
 
+import com.webservice.okhttp.PrintingEventListener;
+
 import okhttp3.OkHttpClient;
 
 public class SSLUtilities {
@@ -120,7 +122,7 @@ public class SSLUtilities {
 		        return true;
 		      }
 		    });
-
+		    builder.eventListenerFactory(PrintingEventListener.FACTORY);
 		    OkHttpClient okHttpClient = builder.build();
 		    return okHttpClient;
 		  } catch (Exception e) {
